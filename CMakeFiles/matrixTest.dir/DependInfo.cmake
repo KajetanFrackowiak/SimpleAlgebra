@@ -8,12 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/kajetan/Documents/my_project/SimpleAlgebra/src/matrix.cpp" "CMakeFiles/matrixTest.dir/src/matrix.cpp.o" "gcc" "CMakeFiles/matrixTest.dir/src/matrix.cpp.o.d"
-  "/home/kajetan/Documents/my_project/SimpleAlgebra/test/matrixTest.cpp" "CMakeFiles/matrixTest.dir/test/matrixTest.cpp.o" "gcc" "CMakeFiles/matrixTest.dir/test/matrixTest.cpp.o.d"
+  "/mnt/c/Users/kajte/Desktop/SimpleAlgebra/src/matrix.cpp" "CMakeFiles/matrixTest.dir/src/matrix.cpp.o" "gcc" "CMakeFiles/matrixTest.dir/src/matrix.cpp.o.d"
+  "/mnt/c/Users/kajte/Desktop/SimpleAlgebra/test/matrixTest.cpp" "CMakeFiles/matrixTest.dir/test/matrixTest.cpp.o" "gcc" "CMakeFiles/matrixTest.dir/test/matrixTest.cpp.o.d"
   )
 
-# Targets to which this target links which contain Fortran sources.
-set(CMAKE_Fortran_TARGET_LINKED_INFO_FILES
+# Targets to which this target links.
+set(CMAKE_TARGET_LINKED_INFO_FILES
   )
 
 # Fortran module output directory.

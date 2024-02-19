@@ -1,0 +1,14 @@
+[
+{
+  "directory": "C:/Users/kajte/Desktop/SimpleAlgebra/build",
+  "command": "g++  @CMakeFiles/matrixTest.dir/includes_CXX.rsp  -pthread -g -std=gnu++1z -o CMakeFiles\\matrixTest.dir\\src\\matrix.cpp.obj -c C:\\Users\\kajte\\Desktop\\SimpleAlgebra\\src\\matrix.cpp",
+  "file": "C:/Users/kajte/Desktop/SimpleAlgebra/src/matrix.cpp",
+  "output": "CMakeFiles/matrixTest.dir/src/matrix.cpp.obj"
+},
+{
+  "directory": "C:/Users/kajte/Desktop/SimpleAlgebra/build",
+  "command": "g++  @CMakeFiles/matrixTest.dir/includes_CXX.rsp  -pthread -g -std=gnu++1z -o CMakeFiles\\matrixTest.dir\\test\\matrixTest.cpp.obj -c C:\\Users\\kajte\\Desktop\\SimpleAlgebra\\test\\matrixTest.cpp",
+  "file": "C:/Users/kajte/Desktop/SimpleAlgebra/test/matrixTest.cpp",
+  "output": "CMakeFiles/matrixTest.dir/test/matrixTest.cpp.obj"
+}
+]
