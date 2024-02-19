@@ -41,5 +41,17 @@ Matrix<T>& Matrix<T>::operator=(const std::vector<std::vector<T>>& values) {
     return *this;
 }
 
-// Explicit instantiation for float, add more as needed
+template <typename T>
+void Matrix<T>::relu() {
+    static_assert(std::is_arithmetic_v<T>, "Type T must be arithmetic (comparable to 0)");
+
+    for (size_t i = 0; i < rows; ++i) {
+        for (size_t j = 0; j < cols; ++j) {
+            data[i][j] = std::max(data[i][j], T(0));
+        }
+    }
+}
+
 template class Matrix<float>;
+template class Matrix<double>;
+

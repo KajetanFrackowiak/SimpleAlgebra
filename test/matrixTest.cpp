@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "matrix.h"
 
+// TEST WITH FLOAT MATRIX MULTIPLICATION
 TEST(MatrixTest, Multiplication) {
     Matrix<float> matrix1(2, 3);
     Matrix<float> matrix2(3, 4);
@@ -27,17 +28,80 @@ TEST(MatrixTest, Multiplication) {
     ASSERT_FLOAT_EQ(result.getData()[1][3], 218.0f);
 }
 
-// TEST(MatrixTest, Relu) {
-//     Matrix<float> matrix(2, 2);
+// TEST WITH DOUBLE MATRIX MULTIPLICATION
+TEST(MatrixTest, MultiplicationDouble) {
+    Matrix<double> matrix1(2, 3);
+    Matrix<double> matrix2(3, 4);
 
-//     matrix = {{-1.0f, 2.0f},
-//               {0.5f, -3.0f}};
+    matrix1 = {{1.5, 2.7, 3.1},
+             {4.2, 5.3, 6.4}};
 
-//     // Assuming you have a 'relu()' function in your Matrix class
-//     matrix.relu();
+    matrix2 = {{7.8, 8.9, 9.01, 10.12},
+             {11.23, 12.34, 13.45, 14.56},
+             {15.67, 16.78, 17.89, 18.90}};
 
-//     // Add assertions to test the result after applying Relu
-// }
+    Matrix<double> result = matrix1 * matrix2;
+
+    ASSERT_EQ(result.getRows(), 2);
+    ASSERT_EQ(result.getCols(), 4);
+
+    ASSERT_NEAR(result.getData()[0][0], 90.6, 1e-2);
+    ASSERT_NEAR(result.getData()[0][1], 98.7, 1e-1);
+    ASSERT_NEAR(result.getData()[0][2], 105.3, 1e-1);
+    ASSERT_NEAR(result.getData()[0][3], 113.07, 1e-1);
+    ASSERT_NEAR(result.getData()[1][0], 192.57, 1e-1);
+    ASSERT_NEAR(result.getData()[1][1], 210.17, 1e-1);
+    ASSERT_NEAR(result.getData()[1][2], 223.62, 1e-1);
+    ASSERT_NEAR(result.getData()[1][3], 240.63, 1e-2); 
+}
+
+// TEST WITH MATRIX MULTIPLICATION, THEN USE RELU
+TEST(MatrixTest, MultiplicationAndReluDouble) {
+    Matrix<double> matrix1(2, 3);
+    Matrix<double> matrix2(3, 4);
+ 
+    matrix1 = {{1.5, -2.7, 3.1},
+             {4.2, -5.3, 6.4}};
+
+    matrix2 = {{7.8, 8.9, 9.01, 10.12},
+             {11.23, 12.34, 13.45, 14.56},
+             {15.67, 16.78, 17.89, 18.90}};
+
+    Matrix<double> result = matrix1 * matrix2;
+ 
+    result.relu();
+
+    ASSERT_EQ(result.getRows(), 2);
+    ASSERT_EQ(result.getCols(), 4);
+
+    ASSERT_NEAR(result.getData()[0][0], 30.0, 1e-1);
+    ASSERT_DOUBLE_EQ(result.getData()[0][1], 32.05);
+    ASSERT_DOUBLE_EQ(result.getData()[0][2], 32.659);
+    ASSERT_DOUBLE_EQ(result.getData()[0][3], 34.458);
+    ASSERT_NEAR(result.getData()[1][0], 73.53, 1e-1);
+    ASSERT_DOUBLE_EQ(result.getData()[1][1], 79.37);
+    ASSERT_DOUBLE_EQ(result.getData()[1][2], 81.053);
+    ASSERT_DOUBLE_EQ(result.getData()[1][3], 86.296);
+}
+
+
+// TEST WITH USE RELU
+TEST(MatrixTest, ReluWithVariousValues) {
+    Matrix<double> matrix(2, 3);
+
+    matrix = {{0.0, -1.0, 3.1},
+            {-.000001, 2.5, 4.2}};
+
+    matrix.relu();
+
+    ASSERT_DOUBLE_EQ(matrix.getData()[0][0], 0.0);
+    ASSERT_DOUBLE_EQ(matrix.getData()[0][1], 0.0);
+    ASSERT_DOUBLE_EQ(matrix.getData()[0][2], 3.1);
+    ASSERT_DOUBLE_EQ(matrix.getData()[1][0], 0.0);
+    ASSERT_DOUBLE_EQ(matrix.getData()[1][1], 2.5);
+    ASSERT_DOUBLE_EQ(matrix.getData()[1][2], 4.2); 
+
+}
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
