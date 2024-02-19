@@ -1,0 +1,3 @@
+/home/kajetan/Documents/my_project/SimpleAlgebra/CMakeFiles/matrixTest.dir
+/home/kajetan/Documents/my_project/SimpleAlgebra/CMakeFiles/edit_cache.dir
+/home/kajetan/Documents/my_project/SimpleAlgebra/CMakeFiles/rebuild_cache.dir

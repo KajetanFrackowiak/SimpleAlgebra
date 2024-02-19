@@ -1,0 +1,1 @@
+g++  -pthread CMakeFiles/matrixTest.dir/src/matrix.cpp.o CMakeFiles/matrixTest.dir/test/matrixTest.cpp.o -o matrixTest  googletest/build/lib/libgtest.a googletest/build/lib/libgtest_main.a 
