@@ -13,7 +13,7 @@ mkdir build
 cd build 
 cmake .. -DBUILD_GMOCK=OFF
 make
-
+```
 ## Getting Started
 ### Clone the SinpleAlgebra repostiory.
 git clone https://github.com/your-username/SimpleAlgebra.git
