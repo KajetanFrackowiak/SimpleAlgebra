@@ -21,6 +21,17 @@ public:
     size_t getCols() const { return cols; }
     const std::vector<std::vector<T>>& getData() const { return data; }
 
+    // friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix) {
+    //     for (size_t i = 0; i < matrix.rows; ++i) {
+    //         for (size_t j = 0; j < matrix.cols; ++j) {
+    //             os << matrix.data[i][j] << " ";
+    //         }
+    //         os << "\n";
+    //     }
+    //     return os;
+    // }
+    
+
 private:
     size_t rows;
     size_t cols;
