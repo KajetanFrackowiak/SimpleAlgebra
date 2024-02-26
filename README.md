@@ -21,6 +21,7 @@ cd SimpleAlgebra
 
 ### Build the project.
 cmake .
+
 make
 
 ### Run the unit tests.
