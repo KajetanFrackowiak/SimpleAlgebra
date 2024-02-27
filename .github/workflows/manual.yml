@@ -22,7 +22,7 @@ jobs:
 
       - name: Build and test the project
         run: |
-          # export CUDAToolkit_ROOT=/path/to/your/cuda/toolkit
+          # export CUDAToolkit_ROOT=/usr/bin/nvcc
           cmake .
           make
           ./matrixTest
