@@ -15,13 +15,18 @@ jobs:
           sudo apt-get install -y build-essential cmake
       - name: Install CUDA Toolkit (if missing)
         run: |
-          # Check if CUDA toolkit is already installed
           if ! command -v nvcc &> /dev/null; then
-            # Download and install CUDA toolkit if not found
-            curl -sSL https://developer.nvidia.com/cuda-downloads/compute/ | grep -E '^<a href="([^"]+cuda-linux.run[^"]+)">$' | cut -d '"' -f 2 | head -n 1 | xargs -I {} wget https://developer.nvidia.com{}
-            sudo chmod +x cuda-linux.run
-            sudo ./cuda-linux.run --silent --no-user-interaction --no-precheck --toolkit
-            rm cuda-linux.run
+            # Use existing action for CUDA Toolkit installation
+            steps:
+              - uses: Jimver/cuda-toolkit@v0.2.14
+                id: cuda-toolkit
+                with:
+                  cuda: '12.0'
+
+            # Print information about installed CUDA toolkit
+            - run: echo "Installed cuda version is: ${{ steps.cuda-toolkit.outputs.cuda }}"
+            - run: echo "Cuda install location: ${{ steps.cuda-toolkit.outputs.CUDA_PATH }}"
+            - run: nvcc -V
           fi
       - name: Clone Google Test
         run: |
@@ -40,4 +45,3 @@ jobs:
         run: cmake .
       - name: Run tests
         run: make
-
