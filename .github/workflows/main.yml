@@ -6,27 +6,66 @@ on:
       - main
 
 jobs:
-  build:
+  build_and_test:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Install CMake
+    - name: Set up CMake
       run: |
         sudo apt-get update
         sudo apt-get install -y cmake
 
-    - name: Install dependencies
+    - name: Set up GTest
       run: |
-        sudo apt-get install -y libgtest-dev
+        git clone https://github.com/google/googletest.git
+        cd googletest
+        mkdir build
+        cd build
+        cmake ..
+        make
+        sudo cp -r include/gtest /usr/include
+        sudo cp -r lib/libgtest* /usr/lib/
+
+    - name: Remove existing build directory
+      run: |
+        rm -rf build
+
+    - name: Create build directory
+      run: mkdir build
 
     - name: Build and run tests
       run: |
-        mkdir build
         cd build
         cmake ..
         make
         ./MatrixTests
 
+  matrix_multiplication_tests:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up CMake
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake
+
+    - name: Remove existing build directory
+      run: |
+        rm -rf build
+
+    - name: Create build directory
+      run: mkdir build
+
+    - name: Run matrix multiplication tests
+      run: |
+        cd build
+        cmake ..
+        make MatrixMultiplicationTests
+        ./MatrixMultiplicationTests
