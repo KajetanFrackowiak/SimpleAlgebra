@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        cuda: [12.0]
+        cuda: [12.0]  # Use the version available in your environment
 
     steps:
     - name: Checkout code
