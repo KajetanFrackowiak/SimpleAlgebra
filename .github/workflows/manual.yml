@@ -9,11 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
-      - name: Export CUDA
-        run: |
-          export CUDAToolkit_ROOT=/usr/local/cuda-12.3/bin/nvcc
-          
+        
       - name: Install Google Test
         run: |
           git clone https://github.com/google/googletest.git
@@ -26,6 +22,7 @@ jobs:
 
       - name: Build and test the project
         run: |
+          export CUDAToolkit_ROOT=/path/to/your/cuda/toolkit
           cmake .
           make
           ./matrixTest
