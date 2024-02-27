@@ -10,11 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up CUDA Toolkit
-      - uses: Jimver/cuda-toolkit@v0.2.14
-        with:
-          cuda: '12.3.2'
-      - run: nvcc -V
+      # - name: Set up CUDA Toolkit
+      # - uses: Jimver/cuda-toolkit@v0.2.14
+      #   with:
+      #     cuda: '12.3.2'
+      # - run: nvcc -V
       
       - name: Install Google Test
         run: |
