@@ -1,22 +1,30 @@
-name: Google Test
+name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main  # or the branch you want to trigger the workflow on
 
 jobs:
-  build_and_test:
-
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
     - name: Install dependencies
-      run: sudo apt-get install -y libgtest-dev cmake
-
-    - name: Build
       run: |
-        cmake .
+        git clone https://github.com/google/googletest.git
+        cd googletest
+        mkdir build
+        cd build
+        cmake .. -DBUILD_GMOCK=OFF
         make
 
-    - name: Test
-      run: ./path-to-your-test-executable
+    - name: Build and run tests
+      run: |
+        cd ../..
+        make .
+        make
+        ./matrixTest
