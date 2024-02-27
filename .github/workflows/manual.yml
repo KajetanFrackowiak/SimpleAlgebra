@@ -24,6 +24,7 @@ jobs:
 
     - name: Build and run tests
       run: |
-        ../../cmake .
+        ../../
+        make .
         make
         ./matrixTest
