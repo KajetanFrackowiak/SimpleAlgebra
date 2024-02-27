@@ -24,7 +24,7 @@ jobs:
         run: |
           # export CUDAToolkit_ROOT=/usr/bin/nvcc
           echo "PATH:"
-          each $PATH
+          echo $PATH
           echo $CUDAToolkit_ROOT
           cmake .
           make
