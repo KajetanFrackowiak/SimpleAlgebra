@@ -9,13 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      # - name: Set up CUDA Toolkit
-      # - uses: Jimver/cuda-toolkit@v0.2.14
-      #   with:
-      #     cuda: '12.3.2'
-      # - run: nvcc -V
       
+      - name: Export CUDA
+        run: |
+          export CUDAToolkit_ROOT=/usr/local/cuda-12.3/bin/nvcc
+          
       - name: Install Google Test
         run: |
           git clone https://github.com/google/googletest.git
