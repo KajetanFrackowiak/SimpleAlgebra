@@ -3,11 +3,14 @@ name: CI
 on:
   push:
     branches:
-      - main  # or the branch you want to trigger the workflow on
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        cuda: [11.4]
 
     steps:
     - name: Checkout code
@@ -15,6 +18,8 @@ jobs:
 
     - name: Install dependencies
       run: |
+        sudo apt-get update
+        sudo apt-get install -y cuda-toolkit-${{ matrix.cuda }}
         git clone https://github.com/google/googletest.git
         cd googletest
         mkdir build
@@ -24,7 +29,8 @@ jobs:
 
     - name: Build and run tests
       run: |
-        cd ../..
+        mkdir build
+        cd build
+        cmake ..
         make
         ./matrixTest
-
