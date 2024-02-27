@@ -1,47 +1,37 @@
-name: Build and Test (CUDA)
+name: Build and Test
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  build_and_test:
-    runs-on: ubuntu-latest  # Replace with desired runner (e.g., macos-latest)
+  build-and-test:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential cmake
-      - name: Install CUDA Toolkit (if missing)
-        run: |
-          if ! command -v nvcc &> /dev/null; then
-            # Use existing action for CUDA Toolkit installation
-            steps:
-              - uses: Jimver/cuda-toolkit@v0.2.14
-                id: cuda-toolkit
-                with:
-                  cuda: '12.0'
 
-            # Print information about installed CUDA toolkit
-            - run: echo "Installed cuda version is: ${{ steps.cuda-toolkit.outputs.cuda }}"
-            - run: echo "Cuda install location: ${{ steps.cuda-toolkit.outputs.CUDA_PATH }}"
-            - run: nvcc -V
-          fi
-      - name: Clone Google Test
+      - name: Install CUDA 12
+        run: |
+          wget https://developer.nvidia.com/compute/cuda/12.0/local_installers/cuda-repo-ubuntu-latest-12.0.140.1-local_10.0.140-1.0-1.dpkg
+          sudo apt update
+          sudo apt install ./cuda-repo-ubuntu-latest-12.0.140.1-local_10.0.140-1.0-1.dpkg
+          sudo apt install cuda-toolkit-12.0  # Adjust version if needed
+          export PATH=/usr/local/cuda-12.0/bin:$PATH
+          export LD_LIBRARY_PATH=/usr/local/cuda-12.0/lib64:$LD_LIBRARY_PATH
+
+      - name: Install Google Test
         run: |
           git clone https://github.com/google/googletest.git
-      - name: Build Google Test
-        working-directory: googletest
-        run: |
+          cd googletest
           mkdir build
           cd build
           cmake .. -DBUILD_GMOCK=OFF
           make
-      - name: Build project
-        env:
-          # Set environment variable for CUDA toolkit (if installed)
-          CUDAToolkit_ROOT=${HOME}/cuda  # Replace with your actual install path
-        run: cmake .
-      - name: Run tests
-        run: make
+          cd ../../
+
+      - name: Build and test the project
+        run: |
+          cmake .
+          make
+          ./matrixTest
+
