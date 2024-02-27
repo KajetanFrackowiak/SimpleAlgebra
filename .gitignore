@@ -7,4 +7,5 @@ Makefile
 src/matrix_mul
 matrixTest
 .vscode/
+.gitignore.swp
 
