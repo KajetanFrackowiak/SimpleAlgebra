@@ -1,41 +1,18 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-#include <vector>
-#include <stdexcept>
+#include <cuda_runtime.h>
 
 template <typename T>
-class Matrix {
-public:
-    Matrix(size_t rows, size_t cols);
-    Matrix(const Matrix& other);
- 
-    ~Matrix();
+__global__ void matrixMul(T *a, T *b, T *c, int N);
 
-    Matrix operator*(const Matrix& other) const;
-    Matrix& operator=(const std::vector<std::vector<T>>& values);
+template <typename T>
+void init_matrix(T *m, int N);
 
-    void relu();
+template <typename T>
+void verify_result(T *a, T *b, T *c, int N);
 
-    size_t getRows() const { return rows; }
-    size_t getCols() const { return cols; }
-    const std::vector<std::vector<T>>& getData() const { return data; }
+template <typename T>
+void launch_kernel_and_profile(T *a, T *b, T *c, int N, dim3 THREADS, dim3 BLOCKS);
 
-    // friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix) {
-    //     for (size_t i = 0; i < matrix.rows; ++i) {
-    //         for (size_t j = 0; j < matrix.cols; ++j) {
-    //             os << matrix.data[i][j] << " ";
-    //         }
-    //         os << "\n";
-    //     }
-    //     return os;
-    // }
-    
-
-private:
-    size_t rows;
-    size_t cols;
-    std::vector<std::vector<T>> data;
-};
-
-#endif  // MATRIX_H
+#endif // MATRIX_H
