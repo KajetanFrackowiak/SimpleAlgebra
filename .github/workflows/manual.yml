@@ -25,6 +25,6 @@ jobs:
     - name: Build and run tests
       run: |
         cd ../..
-        make .
         make
         ./matrixTest
+
