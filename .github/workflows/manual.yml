@@ -23,9 +23,6 @@ jobs:
       - name: Build and test the project
         run: |
           # export CUDAToolkit_ROOT=/usr/bin/nvcc
-          echo "PATH:"
-          echo $PATH
-          echo $CUDAToolkit_ROOT
           cmake .
           make
           ./matrixTest
