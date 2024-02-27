@@ -1,44 +1,26 @@
-name: CI
+name: Build and Test
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  build:
+  build_and_test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        runs-on: ubuntu-latest
-        include:
-          - name: CUDA 12.0
-            cuda: 12.0
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Docker
-      uses: nvidia/setup-cuda@v1
-      with:
-        cuda: 12.0
-
-    - name: Install dependencies
-      run: |
-        apt-get update
-        apt-get install -y git cmake g++
-        git clone https://github.com/google/googletest.git
-        cd googletest
-        mkdir build
-        cd build
-        cmake .. -DBUILD_GMOCK=OFF
-        make
-
-    - name: Build and run tests
-      run: |
-        mkdir build
-        cd build
-        cmake ..
-        make
-        ./matrixTest
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake
+      - name: Build Google Test
+        working-directory: googletest
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DBUILD_GMOCK=OFF
+          make
+      - name: Build project
+        run: cmake .
+      - name: Run tests
+        run: make
