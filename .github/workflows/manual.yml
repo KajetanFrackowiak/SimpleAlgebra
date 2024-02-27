@@ -8,12 +8,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: nvidia/cuda:12.0-base-ubuntu22.04
+    strategy:
+      matrix:
+        runs-on: ubuntu-latest
+        include:
+          - name: CUDA 12.0
+            cuda: 12.0
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Set up Docker
+      uses: nvidia/setup-cuda@v1
+      with:
+        cuda: 12.0
 
     - name: Install dependencies
       run: |
