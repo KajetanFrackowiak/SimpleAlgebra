@@ -8,9 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        cuda: [12.0]  # Use the version available in your environment
+    container:
+      image: nvidia/cuda:12.0-base-ubuntu22.04
 
     steps:
     - name: Checkout code
@@ -18,8 +17,8 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y cuda-toolkit-${{ matrix.cuda }}
+        apt-get update
+        apt-get install -y git cmake g++
         git clone https://github.com/google/googletest.git
         cd googletest
         mkdir build
