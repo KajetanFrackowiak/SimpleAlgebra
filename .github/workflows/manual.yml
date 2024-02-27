@@ -10,15 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install CUDA 12
-        run: |
-          wget https://developer.nvidia.com/compute/cuda/12.0/local_installers/cuda-repo-ubuntu-latest-12.0.140.1-local_10.0.140-1.0-1.dpkg
-          sudo apt update
-          sudo apt install ./cuda-repo-ubuntu-latest-12.0.140.1-local_10.0.140-1.0-1.dpkg
-          sudo apt install cuda-toolkit-12.0  # Adjust version if needed
-          export PATH=/usr/local/cuda-12.0/bin:$PATH
-          export LD_LIBRARY_PATH=/usr/local/cuda-12.0/lib64:$LD_LIBRARY_PATH
-
+      - name: Set up CUDA Toolkit
+        uses: nvidia/cuda@v10.2-runtime
+        with:
+          sub-packages: "devel"
+      
       - name: Install Google Test
         run: |
           git clone https://github.com/google/googletest.git
