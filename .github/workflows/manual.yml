@@ -1,0 +1,80 @@
+name: Matrix
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up CMake
+      uses: actions/setup-cmake@v2
+      with:
+        cmake-version: '3.20'
+
+    - name: Set up GTest
+      run: |
+        git clone https://github.com/google/googletest.git
+        cd googletest
+        mkdir build
+        cd build
+        cmake ..
+        make
+        sudo cp -r include/gtest /usr/include
+        sudo cp -r lib/libgtest* /usr/lib/
+
+    - name: Build and run tests
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        make
+        ./MatrixTests
+
+  matrix_multiplication_tests:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up CMake
+      uses: actions/setup-cmake@v2
+      with:
+        cmake-version: '3.20'
+
+    - name: Run matrix multiplication tests
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        make MatrixMultiplicationTests
+        ./MatrixMultiplicationTests
+
+  matrix_operations_tests:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up CMake
+      uses: actions/setup-cmake@v2
+      with:
+        cmake-version: '3.20'
+
+    - name: Run matrix operations tests
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        make MatrixOperationsTests
+        ./MatrixOperationsTests
