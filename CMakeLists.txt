@@ -9,7 +9,7 @@ include_directories(googletest/googletest/include)
 include_directories(include)
 
 # Add main executable
-add_executable(${PROJECT_NAME} src/main.cpp src/matrix.cu test/test.cpp)
+add_executable(${PROJECT_NAME} src/matrix.cu test/matrixTest.cpp)
 
 # Link libraries
 target_link_libraries(${PROJECT_NAME}

@@ -1,4 +1,4 @@
-# Install script for directory: /mnt/c/Users/kajte/Desktop/SimpleAlgebra
+# Install script for directory: /home/kajetan/Documents/SimpleAlgebra
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/mnt/c/Users/kajte/Desktop/SimpleAlgebra/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/kajetan/Documents/SimpleAlgebra/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

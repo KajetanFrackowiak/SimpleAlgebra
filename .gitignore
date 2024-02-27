@@ -1,0 +1,8 @@
+build/
+CMakeFiles/
+googletest/
+cmake_install.cmake
+CMakeCache.txt
+Makefile
+src/matrix_mul
+matrixTest

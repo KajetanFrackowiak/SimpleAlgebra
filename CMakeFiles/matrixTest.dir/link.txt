@@ -1,1 +1,1 @@
-g++  -pthread CMakeFiles/matrixTest.dir/src/matrix.cpp.o CMakeFiles/matrixTest.dir/test/matrixTest.cpp.o -o matrixTest  googletest/build/lib/libgtest.a googletest/build/lib/libgtest_main.a 
+g++ CMakeFiles/matrixTest.dir/src/matrix.cu.o CMakeFiles/matrixTest.dir/test/matrixTest.cpp.o -o matrixTest   -L/usr/lib/x86_64-linux-gnu/stubs  -L/usr/lib/gcc/x86_64-linux-gnu/12  googletest/build/lib/libgtest.a googletest/build/lib/libgtest_main.a -lcudadevrt -lcudart_static -lrt -lpthread -ldl 

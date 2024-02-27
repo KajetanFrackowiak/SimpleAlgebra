@@ -1,5 +1,5 @@
 #include "matrix.h"
-// #include <cassert>
+#include <gtest/gtest.h>
 
 #include <cuda_runtime.h>
 
@@ -22,7 +22,14 @@ __global__ void matrixMul(T *a, T *b, T *c, int N){
     }
 }
 
-// Initializes a square matrix with random numbers between 0-100
+template <typename T>
+__global__ void relu(T *a, T *b, int N) {
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if (idx < N) {
+        b[idx] = max(a[idx], static_cast<T>(0));
+    }
+}
+
 template <typename T>
 void init_matrix(T *m, int N){
     for(int i = 0; i < N * N; i++){
@@ -30,22 +37,33 @@ void init_matrix(T *m, int N){
     }
 }
 
-// Verify the result on the CPU
 template <typename T>
-void verify_result(T *a, T *b, T *c, int N){
-    int tmp;
-    // For every row...
-    for(int i = 0; i < N; i++){
-        // For every col...
-        for(int j = 0; j < N; j++){
-            // For every element in the row-col pair
-            tmp = 0;
-            for(int k = 0; k < N; k++){
+void verify_multiply_result(T *a, T *b, T *c, int N) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            T tmp = 0;
+            for (int k = 0; k < N; k++) {
                 tmp += a[i * N + k] * b[k * N + j];
             }
-            
-            // Check each result
-            // assert(tmp == c[i * N + j]);
+            ASSERT_EQ(tmp, c[i * N + j]);
+        }
+    }
+}
+
+template <typename T>
+void verify_relu_result(T *a, T *b, T *c, int N) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            T tmp = 0;
+            for (int k = 0; k < N; k++) {
+                tmp += a[i * N + k] * b[k * N + j];
+            }
+
+            if (c[i * N + j] == 0) {
+                ASSERT_GE(tmp, static_cast<T>(0));
+            } else {
+                ASSERT_EQ(tmp, c[i * N + j]);
+            }
         }
     }
 }
@@ -56,9 +74,12 @@ void launch_kernel_and_profile(T *a, T *b, T *c, int N, dim3 THREADS, dim3 BLOCK
     cudaDeviceSynchronize();
 }
 
-// Explicit instation of needed types
+
 template __global__ void matrixMul<float>(float*, float*, float*, int);
 template __global__ void matrixMul<double>(double*, double*, double*, int);
+
+template __global__ void relu<float>(float*, float*, int);
+template __global__ void relu<double>(double*, double*, int);
 
 template void init_matrix<float>(float*, int);
 template void init_matrix<double>(double*, int);
@@ -66,5 +87,8 @@ template void init_matrix<double>(double*, int);
 template void launch_kernel_and_profile<float>(float*, float*, float*, int, dim3, dim3);
 template void launch_kernel_and_profile<double>(double*, double*, double*, int, dim3, dim3);
 
-template void verify_result<float>(float*, float*, float*, int);
-template void verify_result<double>(double*, double*, double*, int);
+template void verify_multiply_result<float>(float*, float*, float*, int);
+template void verify_multiply_result<double>(double*, double*, double*, int);
+
+template void verify_relu_result<float>(float*, float*, float*, int);
+template void verify_relu_result<double>(double*, double*, double*, int);
