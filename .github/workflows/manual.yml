@@ -1,4 +1,4 @@
-name: Build and Test
+name: Build and Test (CUDA)
 
 on:
   push:
@@ -13,6 +13,16 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential cmake
+      - name: Install CUDA Toolkit (if missing)
+        run: |
+          # Check if CUDA toolkit is already installed
+          if ! command -v nvcc &> /dev/null; then
+            # Download and install CUDA toolkit if not found
+            curl -sSL https://developer.nvidia.com/cuda-downloads/compute/ | grep -E '^<a href="([^"]+cuda-linux.run[^"]+)">$' | cut -d '"' -f 2 | head -n 1 | xargs -I {} wget https://developer.nvidia.com{}
+            sudo chmod +x cuda-linux.run
+            sudo ./cuda-linux.run --silent --no-user-interaction --no-precheck --toolkit
+            rm cuda-linux.run
+          fi
       - name: Clone Google Test
         run: |
           git clone https://github.com/google/googletest.git
@@ -24,6 +34,10 @@ jobs:
           cmake .. -DBUILD_GMOCK=OFF
           make
       - name: Build project
+        env:
+          # Set environment variable for CUDA toolkit (if installed)
+          CUDAToolkit_ROOT=${HOME}/cuda  # Replace with your actual install path
         run: cmake .
       - name: Run tests
         run: make
+
