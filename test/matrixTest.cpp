@@ -72,7 +72,7 @@ TEST(MatrixOperationsTest, FloatReLUOperation) {
 TEST(MatrixOperationsTest, DoubleReLUOperation) {
     const int N = 10;
 
-    float *a, *b;
+    double *a, *b;
     cudaMallocManaged(&a, N * N * sizeof(double));
     cudaMallocManaged(&b, N * N * sizeof(double));
 
